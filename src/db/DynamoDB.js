@@ -16,10 +16,11 @@ export default class DynamoDB {
    * @param {*} data
    */
   async putItem(data) {
-    try {
-      await this.dynamoDB.put(data).promise();
-    } catch (error) {
-      console.error(error);
-    }
+    await this.dynamoDB.put(data).promise();
+  }
+
+  async getItem(data) {
+    const response = await this.dynamoDB.get(data).promise();
+    return response.Item;
   }
 }

@@ -21,5 +21,16 @@ const data = {
 (async function () {
   const dynamoDB = new DynamoDB("ap-northeast-2", credentials);
 
+  // PUT
   await dynamoDB.putItem(data);
+
+  // GET
+  const item = await dynamoDB.getItem({
+    TableName: "test",
+    Key: {
+      PK: "user#1234",
+      SK: "profile",
+    },
+  });
+  console.log(item);
 })();
