@@ -76,6 +76,70 @@ async function lecture3_is_one_to_many() {
   console.log(items);
 }
 
+async function lecture4_is_many_to_many() {
+  const teamMembers = [
+    // Member
+    {
+      TableName: "test",
+      Item: {
+        PK: "team#1234",
+        SK: "teamMember#1234",
+        UserID: "user#1234",
+        Role: "supervisor",
+      },
+    },
+    {
+      TableName: "test",
+      Item: {
+        PK: "team#1235",
+        SK: "teamMember#1235",
+        UserID: "user#1234",
+        Role: "supervisor",
+      },
+    },
+    {
+      TableName: "test",
+      Item: {
+        PK: "team#1235",
+        SK: "teamMember#1235",
+        UserID: "user#1235",
+        Role: "supervisor",
+      },
+    },
+    // Team
+    {
+      TableName: "test",
+      Item: {
+        PK: "team#1234",
+        SK: "meta",
+        name: "TEam Blue",
+      },
+    },
+    {
+      TableName: "test",
+      Item: {
+        PK: "team#1235",
+        SK: "meta",
+        name: "Team Green",
+      },
+    },
+  ];
+
+  await Promise.all(teamMembers.map((data) => dynamoDB.putItem(data)));
+
+  const params = {
+    TableName: "test",
+    IndexName: "UserID-SK-index",
+    KeyConditionExpression: "UserID = :gsi AND begins_with(SK, :sk)",
+    ExpressionAttributeValues: {
+      ":gsi": "user#1234",
+      ":sk": "teamMember",
+    },
+  };
+  const items = await dynamoDB.queryItem(params);
+  console.log(items);
+}
+
 (async () => {
-  await lecture3_is_one_to_many();
+  await lecture4_is_many_to_many();
 })();
