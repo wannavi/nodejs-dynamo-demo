@@ -19,8 +19,13 @@ export default class DynamoDB {
     await this.dynamoDB.put(data).promise();
   }
 
-  async getItem(data) {
-    const response = await this.dynamoDB.get(data).promise();
+  async getItem(params) {
+    const response = await this.dynamoDB.get(params).promise();
     return response.Item;
+  }
+
+  async queryItem(params) {
+    const response = await this.dynamoDB.query(params).promise();
+    return response.Items;
   }
 }

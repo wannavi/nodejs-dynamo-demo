@@ -3,7 +3,8 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "build": "babel src -d dist",
-    "dev": "babel-node src/index.js"
+    "dev": "babel-node src/index.js",
+    "test": "jest"
   },
   "version": "1.0.0",
   "main": "index.js",
@@ -16,6 +17,7 @@
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.5",
     "@babel/node": "^7.18.5",
-    "@babel/preset-env": "^7.18.2"
+    "@babel/preset-env": "^7.18.2",
+    "jest": "^28.1.1"
   }
 }
