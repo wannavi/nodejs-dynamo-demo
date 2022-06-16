@@ -1,0 +1,43 @@
+{
+  "name": "lambda-dynamo-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lambda.js",
+  "scripts": {
+    "clean": "rm -Rf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc -d",
+    "postbuild": "cd src && find . -name '*.json' -type f -exec cp {} ../dist/{} \\; && cd ..",
+    "start": "node dist/app.js",
+    "pack": "cp package.json package-lock.json dist/ && cd dist && npm ci --production --target_arch=x64 --target_platform=linux && rm -Rf ./node_modules/@types && zip -rqy ../dist.zip . && cd ..",
+    "postpack": "node -e \"require('fs').statSync('./dist.zip').size > 1024 * 1024 * 50 && [console.log('artifact has to be smaller than 50MB'), process.exit(1)]\"",
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/www.ts",
+    "deploy": "npm run build && npm run pack && serverless deploy",
+    "deploy:stage": "npm run deploy -- -s stage",
+    "deploy:prod": "npm run deploy -- -s prod",
+    "info:stage": "sls info -s stage",
+    "info:prod": "sls info -s prod"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/ejs": "^3.1.1",
+    "@vendia/serverless-express": "^4.8.2",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "morgan": "^1.10.0",
+    "source-map-support": "^0.5.21",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^18.0.0",
+    "nodemon": "^2.0.16",
+    "serverless-offline": "^8.8.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  }
+}

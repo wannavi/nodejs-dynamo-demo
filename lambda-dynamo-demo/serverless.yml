@@ -1,0 +1,24 @@
+service: nodejs-dynamo-demo
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: ap-northeast-2
+
+package:
+  artifact: dist.zip
+
+functions:
+  main:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: "{proxy+}"
+
+plugins:
+  - serverless-offline
