@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import BaseRoute from "../BaseRoute";
+import BaseRoute from "./BaseRoute";
 
 export default class HelloRoute extends BaseRoute {
   constructor() {

@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response, Router } from "express";
-import BaseRoute from "../BaseRoute";
+import { NextFunction, Request, Response } from "express";
+import BaseRoute from "../routes/BaseRoute";
 
 export default class ErrorHandler extends BaseRoute {
   constructor() {
